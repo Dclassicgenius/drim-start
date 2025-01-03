@@ -12,3 +12,21 @@ export function formatDate(date: string) {
     year: "numeric",
   });
 }
+
+export function formatViews(count: number, singular: string, plural: string) {
+  if (count === 1) {
+    return `1 ${singular}`;
+  }
+
+  let formattedCount;
+
+  if (count >= 1_000_000) {
+    formattedCount = (count / 1_000_000).toFixed(1).replace(/\.0$/, "") + "M";
+  } else if (count >= 1_000) {
+    formattedCount = (count / 1_000).toFixed(1).replace(/\.0$/, "") + "K";
+  } else {
+    formattedCount = count;
+  }
+
+  return `${formattedCount} ${plural}`;
+}
