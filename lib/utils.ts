@@ -30,3 +30,7 @@ export function formatViews(count: number, singular: string, plural: string) {
 
   return `${formattedCount} ${plural}`;
 }
+
+export function parseServerActionResponse<T>(response: T) {
+  return JSON.parse(JSON.stringify(response));
+}
