@@ -17,6 +17,7 @@ export const createPitch = async (
     return parseServerActionResponse({
       error: "Not signed in",
       status: "ERROR",
+      formData: Object.fromEntries(form),
     });
 
   const { title, description, category, link } = Object.fromEntries(
@@ -48,6 +49,7 @@ export const createPitch = async (
       ...result,
       error: "",
       status: "SUCCESS",
+      formData: Object.fromEntries(form),
     });
   } catch (error) {
     console.log(error);
@@ -55,6 +57,7 @@ export const createPitch = async (
     return parseServerActionResponse({
       error: JSON.stringify(error),
       status: "ERROR",
+      formData: Object.fromEntries(form),
     });
   }
 };

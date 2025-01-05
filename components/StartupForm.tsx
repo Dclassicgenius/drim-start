@@ -55,7 +55,12 @@ const StartupForm = () => {
           variant: "destructive",
         });
 
-        return { ...prevState, error: "Validation failed", status: "ERROR" };
+        return {
+          ...prevState,
+          error: "Validation failed",
+          status: "ERROR",
+          formData: Object.fromEntries(formData),
+        };
       }
 
       toast({
@@ -68,6 +73,7 @@ const StartupForm = () => {
         ...prevState,
         error: "An unexpected error has occurred",
         status: "ERROR",
+        formData: Object.fromEntries(formData),
       };
     }
   };
@@ -75,6 +81,7 @@ const StartupForm = () => {
   const [state, formAction, isPending] = useActionState(handleFormSubmit, {
     error: "",
     status: "INITIAL",
+    formData: {},
   });
 
   return (
@@ -89,7 +96,7 @@ const StartupForm = () => {
           className="startup-form_input"
           required
           placeholder="Startup Title"
-          defaultValue={state.title}
+          defaultValue={state.formData?.title || ""}
         />
 
         {errors.title && <p className="startup-form_error">{errors.title}</p>}
@@ -105,7 +112,7 @@ const StartupForm = () => {
           className="startup-form_textarea"
           required
           placeholder="Startup Description"
-          defaultValue={state.description}
+          defaultValue={state.formData?.description || ""}
         />
 
         {errors.description && (
@@ -123,7 +130,7 @@ const StartupForm = () => {
           className="startup-form_input"
           required
           placeholder="Startup Category (Tech, Health, Education...)"
-          defaultValue={state.category}
+          defaultValue={state.formData?.category || ""}
         />
 
         {errors.category && (
@@ -141,7 +148,7 @@ const StartupForm = () => {
           className="startup-form_input"
           required
           placeholder="Startup Image URL"
-          defaultValue={state.link}
+          defaultValue={state.formData?.link || ""}
         />
 
         {errors.link && <p className="startup-form_error">{errors.link}</p>}
@@ -154,7 +161,6 @@ const StartupForm = () => {
 
         <MDEditor
           value={pitch}
-          defaultValue={state.pitch}
           onChange={(value) => setPitch(value as string)}
           id="pitch"
           preview="edit"
